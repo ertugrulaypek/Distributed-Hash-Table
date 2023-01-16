@@ -70,8 +70,8 @@ void* runServerThread(void* args) {
   }
 }
 
-CommBuffer* initSharedBufferArray(void* shared_ptr) {
-  CommBuffer* commBufferArray = new (shared_ptr) CommBuffer[N_SERVER_THREADS]();
+CommBuffer* initSharedBufferArray(void* sharedPtr) {
+  CommBuffer* commBufferArray = new (sharedPtr) CommBuffer[N_SERVER_THREADS]();
 
   pthread_condattr_t attrcond;
   pthread_condattr_init(&attrcond);
@@ -128,6 +128,7 @@ int main(int argc, char** argv) {
   }
 
   // clean up resources
+  delete table;
   munmap(ptr, SHM_SIZE);
   shm_unlink(SHM_NAME);
   close(shm_fd);
